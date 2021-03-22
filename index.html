@@ -1,2 +1,104 @@
-[InternetShortcut]
-URL=https://github.com/api-application/Dashboard/blob/main/index.html
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>...</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+  .loading {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: url(http://img.ffffound.com/static-data/assets/6/f71fbabb835aebca4489ba2e0d5cd6aff3ad528c_m.gif) center center no-repeat;
+}
+
+td {
+background-color: #003366;
+font-family: 'Open Sans', sans-serif;
+font-size:12px;
+ font-weight: bold;
+color:#FFFFFF;
+}
+
+.row-red > td {
+  background: red;
+}
+    </script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">    
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="console"></div>
+
+<script src="js/index.js"></script>
+     <script> 
+        var spreadsheetID = "1YUKom7FNEvxqSlQiSao_aLEcC0cLVyg5xmBv-JsaIUs";
+ 
+ var url = "https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/od6/public/values?alt=json";
+ 
+$.getJSON(url, function(data) {
+
+  var html = '';
+
+  html += '<table cellpadding=2 cellspacing=0 border=0 width=100% id=table_id>';
+  html += '<tr>';
+  html += '<td>Date</td>';
+  html += '<td>Currency Pair</td>';
+  html += '<td>Buy / Sell</td>';
+  html += '<td>Stop-Loss</td>';
+  html += '<td>Amount</td>';
+  html += '<td>Price</td>';
+  html += '<td>Closing Price</td>';
+  html += '<td>P/L</td>';
+  html += '<td>PIP</td>';
+  html += '<td>P/L US$</td>';
+  html += '<td>P/L EURO</td>';
+  html += '<td>Entry Time</td>';
+  html += '<td>Exit Time</td>';
+  html += '</tr>';
+  
+  var entry = data.feed.entry;
+  for (var i = 0; i < entry.length; i++) {
+    html += '<tr>';
+    html += '<td>' + entry[i]['gsx$date']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$pair']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$bs']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$sl']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$amount']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$price']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$closeprice']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$pl']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$pip']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$plusd']['$t'] + '</td>';
+    if (entry[i]['gsx$pleuro']['$t'].indexOf("-€") !== -1) {
+    // Has the symbol
+    html += '<td style="background-color: #ff0000;">' + entry[i]['gsx$pleuro']['$t'] + '</td>';
+} else {
+    // Doesn't have symbol
+    html += '<td>' + entry[i]['gsx$pleuro']['$t'] + '</td>';}
+    html += '<td>' + entry[i]['gsx$entry']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$exit']['$t'] + '</td>';
+    html += '</tr>';
+  }
+  html += '</table>';
+
+  $('.console').html(html);
+});
+
+// loading animation
+var loading = $('.loading');
+loading.hide();
+$(document)
+  .ajaxStart(function() {
+    loading.show();
+  })
+  .ajaxStop(function() {
+    loading.hide();
+  });
+  </script>
+</body>
+</html>
