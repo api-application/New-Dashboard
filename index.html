@@ -35,61 +35,49 @@ color:#FFFFFF;
 <div class="console"></div>
 
 <script src="js/index.js"></script>
-     <script> 
-        var spreadsheetID = "1YUKom7FNEvxqSlQiSao_aLEcC0cLVyg5xmBv-JsaIUs";
+      <script>
+ var spreadsheetID = "1Ag6nj9m7PKKj2OWZpN16MYyjPNPfsSOw6cmZqq5TLfo";
+ 
  
  var url = "https://spreadsheets.google.com/feeds/list/" + spreadsheetID + "/od6/public/values?alt=json";
  
+
 $.getJSON(url, function(data) {
 
   var html = '';
 
-  html += '<table cellpadding=2 cellspacing=0 border=0 width=100% id=table_id>';
+ 
+  html += '<table cellpadding=10 cellspacing=0 border=1>';
   html += '<tr>';
-  html += '<td>Date</td>';
-  html += '<td>Currency Pair</td>';
-  html += '<td>Buy / Sell</td>';
-  html += '<td>Stop-Loss</td>';
-  html += '<td>Amount</td>';
-  html += '<td>Price</td>';
-  html += '<td>Closing Price</td>';
-  html += '<td>P/L</td>';
-  html += '<td>PIP</td>';
-  html += '<td>P/L US$</td>';
-  html += '<td>P/L EURO</td>';
-  html += '<td>Entry Time</td>';
-  html += '<td>Exit Time</td>';
+  html += '<th>Name</th>';
+  html += '<th>Gender</th>';
+  html += '<th>Class Level</th>';
+  html += '<th>Home State</th>';
+ 
   html += '</tr>';
   
+  
   var entry = data.feed.entry;
+  /**
+  ** Change to descending order
+  ** for (var i = entry.length - 1; i >= 0; i -= 1) {
+   */
   for (var i = 0; i < entry.length; i++) {
     html += '<tr>';
-    html += '<td>' + entry[i]['gsx$date']['$t'] + '</td>';
-    html += '<td>' + entry[i]['gsx$pair']['$t'] + '</td>';
-    html += '<td>' + entry[i]['gsx$bs']['$t'] + '</td>';
-    html += '<td>' + entry[i]['gsx$sl']['$t'] + '</td>';
-    html += '<td>' + entry[i]['gsx$amount']['$t'] + '</td>';
-    html += '<td>' + entry[i]['gsx$price']['$t'] + '</td>';
-    html += '<td>' + entry[i]['gsx$closeprice']['$t'] + '</td>';
-    html += '<td>' + entry[i]['gsx$pl']['$t'] + '</td>';
-    html += '<td>' + entry[i]['gsx$pip']['$t'] + '</td>';
-    html += '<td>' + entry[i]['gsx$plusd']['$t'] + '</td>';
-    if (entry[i]['gsx$pleuro']['$t'].indexOf("-€") !== -1) {
-    // Has the symbol
-    html += '<td style="background-color: #ff0000;">' + entry[i]['gsx$pleuro']['$t'] + '</td>';
-} else {
-    // Doesn't have symbol
-    html += '<td>' + entry[i]['gsx$pleuro']['$t'] + '</td>';}
-    html += '<td>' + entry[i]['gsx$entry']['$t'] + '</td>';
-    html += '<td>' + entry[i]['gsx$exit']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$_cn6ca']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$_cokwr']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$_cpzh4']['$t'] + '</td>';
+    html += '<td>' + entry[i]['gsx$_cre1l']['$t'] + '</td>';
+    
     html += '</tr>';
   }
   html += '</table>';
 
+
   $('.console').html(html);
 });
 
-// loading animation
+
 var loading = $('.loading');
 loading.hide();
 $(document)
@@ -99,6 +87,9 @@ $(document)
   .ajaxStop(function() {
     loading.hide();
   });
-  </script>
+
+
+Resources
+    </script>
 </body>
 </html>
